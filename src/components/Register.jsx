@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,6 +32,13 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
+    useEffect(() => {
+        if (registrationSuccess) {
+            toast.success("Registration successful!");
+            navigate("/login");
+        }
+    }, [registrationSuccess]);
+
     const handleRegister = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -62,10 +69,8 @@ function Register() {
                 lastName,
                 email
             });
-
-            setRegistrationSuccess(true);
             toast.success("Registration successful!");
-            navigate("/login");
+            setRegistrationSuccess(true);
         } catch (error) {
             console.error(error.message);
             toast.error(error.message);
@@ -139,15 +144,6 @@ function Register() {
                         </Button>
                     </div>
                 </form>
-                {registrationSuccess && (
-                    <div className="mt-4 text-center text-sm">
-                        Registration successful!{" "}
-                        <Link to="/login" className="underline cursor-pointer">
-                            Login
-                        </Link>{" "}
-                        to continue.
-                    </div>
-                )}
                 <div className="mt-4 text-center text-sm">
                     Already have an account?{" "}
                     <Link to="/login" className="underline cursor-pointer">
