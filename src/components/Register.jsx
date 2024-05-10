@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,23 +55,39 @@ function Register() {
                 password
             );
 
+            // Hash the password
+            const hashedPassword = await hashPassword(password);
+
             await addDoc(collection(db, "users"), {
                 uid: userCredential.user.uid,
                 firstName,
                 lastName,
-                email
+                email,
+                password: hashedPassword 
             });
+
+            toast.success("Account created successfully!");
+            navigate('/login'); 
         } catch (error) {
             console.error(error.message);
             toast.error(error.message);
         }
     };
 
+    // Function to hash the password
+    const hashPassword = async (password) => {
+        // Implement password hashing logic here using the scrypt utility or any other suitable method
+        // Return the hashed password
+        return password;
+    };
+
     return (
-<div className="h-screen flex items-center justify-center">
-    <div className="mx-auto max-w-sm">
-        <div className="text-xl font-bold text-center mb-1"> <h1>Sign Up to Fin<span className="text-green-500">Vue</span> </h1></div>
-                <div className=" flex items-center justify-center mb-4">
+        <div className="h-screen flex items-center justify-center">
+            <div className="mx-auto max-w-sm">
+                <div className="text-xl font-bold text-center mb-1">
+                    <h1>Sign Up to Fin<span className="text-green-500">Vue</span></h1>
+                </div>
+                <div className="flex items-center justify-center mb-4">
                     <p>Enter your information to create an account</p>
                 </div>
                 <form onSubmit={handleRegister}>
@@ -140,11 +156,10 @@ function Register() {
                         Sign in
                     </Link>
                 </div>
-                {/* Render the toast notifications here */}
                 <Toaster />
             </div>
         </div>
     );
 }
-
+    
 export default Register;
