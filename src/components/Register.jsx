@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
-import { Toaster, toast } from 'react-hot-toast'; // Import Toaster and toast from react-hot-toast
+import { Toaster, toast } from 'react-hot-toast'; 
 
 const firebaseConfig = {
     apiKey: "AIzaSyDoRWJ-StU751uUFka1qDgNBslu9hEaunA",
@@ -30,14 +30,6 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [registrationSuccess, setRegistrationSuccess] = useState(false);
-
-    useEffect(() => {
-        if (registrationSuccess) {
-            toast.success("Registration successful!");
-            navigate("/login");
-        }
-    }, [registrationSuccess]);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -69,8 +61,6 @@ function Register() {
                 lastName,
                 email
             });
-            toast.success("Registration successful!");
-            setRegistrationSuccess(true);
         } catch (error) {
             console.error(error.message);
             toast.error(error.message);
@@ -78,10 +68,10 @@ function Register() {
     };
 
     return (
-        <div className="h-screen flex items-center justify-center">
-            <div className="mx-auto max-w-sm">
-                <div className="text-xl">Sign Up</div>
-                <div>
+<div className="h-screen flex items-center justify-center">
+    <div className="mx-auto max-w-sm">
+        <div className="text-xl font-bold text-center mb-1"> <h1>Sign Up to Fin<span className="text-green-500">Vue</span> </h1></div>
+                <div className=" flex items-center justify-center mb-4">
                     <p>Enter your information to create an account</p>
                 </div>
                 <form onSubmit={handleRegister}>
@@ -139,8 +129,8 @@ function Register() {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
                         </div>
-                        <Button type="submit" className="w-full">
-                            Create an account
+                        <Button type="submit" className="w-full bg-green-500 text-black font-bold text-0F4D0E hover:bg-green-700">
+                            CREATE AN ACCOUNT
                         </Button>
                     </div>
                 </form>
