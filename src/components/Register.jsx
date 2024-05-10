@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,8 +7,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
-import toast, { Toaster } from 'react-hot-toast';
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster, toast } from 'react-hot-toast'; // Import Toaster and toast from react-hot-toast
 
 const firebaseConfig = {
     apiKey: "AIzaSyDoRWJ-StU751uUFka1qDgNBslu9hEaunA",
@@ -24,6 +23,8 @@ const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 
 function Register() {
+    const navigate = useNavigate();
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -64,6 +65,7 @@ function Register() {
 
             setRegistrationSuccess(true);
             toast.success("Registration successful!");
+            navigate("/login");
         } catch (error) {
             console.error(error.message);
             toast.error(error.message);
@@ -152,8 +154,9 @@ function Register() {
                         Sign in
                     </Link>
                 </div>
+                {/* Render the toast notifications here */}
+                <Toaster />
             </div>
-            <Toaster position="top-center" /> {/* Use Toaster from react-hot-toast */}
         </div>
     );
 }
