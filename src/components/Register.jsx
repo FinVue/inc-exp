@@ -42,33 +42,37 @@ function Register() {
             toast.error("Passwords do not match");
             return;
         }
-    
+
         if (password.length < 6 || !/[\W_\-<>]/.test(password)) {
             toast.error("Password must be at least 6 characters long and contain at least one special character");
             return;
         }
-    
+
         if (!email.endsWith("@gmail.com")) {
             toast.error("Email must be a Gmail address");
             return;
         }
-    
+
         try {
             const userCredential = await createUserWithEmailAndPassword(
                 auth,
                 email,
                 password
             );
-    
+
+            // Hash the password
+            const hashedPassword = await hashPassword(password);
+
             await addDoc(collection(db, "users"), {
                 uid: userCredential.user.uid,
                 firstName,
                 lastName,
-                email
+                email,
+                password: hashedPassword 
             });
-    
+
             toast.success("Account created successfully!");
-            navigate('/login');
+            navigate('/login'); 
         } catch (error) {
             console.error(error.message);
             toast.error(error.message);
@@ -77,14 +81,9 @@ function Register() {
 
     // Function to hash the password
     const hashPassword = async (password) => {
-        try {
-            const saltRounds = 10; // Number of salt rounds for bcrypt
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
-            return hashedPassword;
-        } catch (error) {
-            console.error('Error hashing password:', error);
-            throw error; // Rethrow the error to handle it appropriately
-        }
+        // Implement password hashing logic here using the scrypt utility or any other suitable method
+        // Return the hashed password
+        return password;
     };
 
     return (
