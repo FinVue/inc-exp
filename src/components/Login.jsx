@@ -22,7 +22,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
 const adminUid = "hTKNRPM0jJSPJ6cRD5kN0LUlZfN2"; // Admin UID
-
+// Admin password: admin123
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -8,6 +8,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Toaster, toast } from 'react-hot-toast'; 
+import bcrypt from 'bcryptjs';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDoRWJ-StU751uUFka1qDgNBslu9hEaunA",
@@ -22,7 +23,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 
-function Register() {
+const Register = () => {
     const navigate = useNavigate();
 
     const [firstName, setFirstName] = useState("");
@@ -79,11 +80,19 @@ function Register() {
         }
     };
 
-    // Function to hash the password
+    // Function using bcryptjs to hash the password
+    // Check firestore database a long string of unique characters
+    // if it shows a long string unique characters then it means
+    // bcryptjs is working
     const hashPassword = async (password) => {
-        // Implement password hashing logic here using the scrypt utility or any other suitable method
-        // Return the hashed password
-        return password;
+        try {
+            const salt = bcrypt.genSaltSync(10);
+            const hashedPassword = bcrypt.hashSync(password, salt);
+            return hashedPassword;
+        } catch (error) {
+            console.error("Error hashing password:", error);
+            throw new Error("Error hashing password");
+        }
     };
 
     return (
