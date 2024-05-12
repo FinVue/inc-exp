@@ -50,9 +50,9 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       if (user.uid === adminUid) {
-        window.location.href = '/adminDashboard'; 
+        window.location.href = '/adminHomepage'; 
       } else {
-        window.location.href = '/dashboard'; 
+        window.location.href = '/homepage'; 
       }
     } catch (error) {
       setError(error.message);
@@ -66,9 +66,9 @@ const Login = () => {
       const user = result.user;
       // Redirect user after successful sign-in
       if (user.uid === adminUid) {
-        window.location.href = '/adminDashboard'; 
+        window.location.href = '/adminHomepage'; 
       } else {
-        window.location.href = '/dashboard'; 
+        window.location.href = '/userHomepage'; 
       }
     } catch (error) {
       setError(error.message);
@@ -144,6 +144,22 @@ const Login = () => {
                 <Button type="submit" className="w-full bg-green-500 text-black font-bold text-0F4D0E hover:bg-green-700">
                     LOGIN
                 </Button>
+                  <div className="text-xs mb-4 text-center">
+                    By selecting Create Account, you agree to our{" "}
+                  <a href="https://firebasestorage.googleapis.com/v0/b/inc-exp-af4c2.appspot.com/o/terms%20and%20agreement%2FTerms%20and%20Agreement.pdf?alt=media&token=f6153b27-21d1-4cb6-8b29-71ea057aed01" className="underline text-green-500 hover:text-green-600 font-weight: 600">
+                    Terms
+                  </a>{" "}
+                    and have read and acknowledge our{" "}
+                  <a href="https://firebasestorage.googleapis.com/v0/b/inc-exp-af4c2.appspot.com/o/terms%20and%20agreement%2FRA-10173-Data-Privacy-Act-of-2012.pdf?alt=media&token=50d31549-19a6-44f3-b0bf-a242e5141e38" className="underline text-green-500 hover:text-green-600 font-weight: 600">
+                   Global Privacy Statement
+                  </a>
+                    .
+                   </div>
+                  <div className="flex items-center justify-center">
+                    <div className="border-t border-green-500 w-2/5"></div>
+                    <span className="px-2 mx-2">or</span>
+                  <div className="border-t border-green-500 w-2/5"></div>
+                </div>
                 <Button 
                   onClick={handleGoogleSignIn} 
                   className="bg-transparent hover:bg-blue-500 text-black-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
