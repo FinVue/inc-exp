@@ -1,27 +1,36 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Button } from "./components/ui/button";
 import Login from "./components/Login";
 import Register from './components/Register';
+import Navbar from './components/navbar';
 
 function App() {
   return (
     <Router>
       <div className="px-20">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<StartUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/homepage" element={<Homepage />} />
         </Routes>
       </div>
     </Router>
   );
 }
 
-function Home() {
+function Homepage() {
   return (
     <>
-      <h1>Welcome to Home Page</h1>
+      <Navbar />
+    </>
+  );
+}
+
+function StartUp() {
+  return (
+    <>
+      <h1>Welcome to startup page</h1>
     </>
   );
 }
