@@ -1,8 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/navbar';
+import IncExp from './pages/inc_exp';
+import TaxCalc from './pages/tax_calc';
+import EmergencyCalc from './pages/emergency_calc';
 import Login from "./components/Login";
 import Register from './components/Register';
-import Navbar from './components/navbar';
 
 function App() {
   return (
@@ -13,6 +16,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/homepage" element={<Homepage />} />
+          {/* Add routes for new components */}
+          <Route path="/IncExp" element={<IncExp />} />
+          <Route path="/TaxCalc" element={<TaxCalc />} />
+          <Route path="/EmergencyCalc" element={<EmergencyCalc />} />
         </Routes>
       </div>
     </Router>
