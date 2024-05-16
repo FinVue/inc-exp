@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/navbar';
+import Navbar from './components/MainNavbar';
 import IncExp from './pages/inc_exp';
 import TaxCalc from './pages/tax_calc';
 import EmergencyCalc from './pages/emergency_calc';
