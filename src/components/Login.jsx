@@ -35,7 +35,6 @@ const Login = () => {
     const unsubscribe = onSnapshot(collection(db, "users"), (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
-          // Show toast notification for successful registration
           toast.success("Registration successful! You can now log in.");
         }
       });
@@ -68,7 +67,7 @@ const Login = () => {
       if (user.uid === adminUid) {
         window.location.href = '/adminHomepage'; 
       } else {
-        window.location.href = '/userHomepage'; 
+        window.location.href = '/homepage'; 
       }
     } catch (error) {
       setError(error.message);

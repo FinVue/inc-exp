@@ -19,7 +19,7 @@ function App() {
           {/* Add routes for new components */}
           <Route path="/IncExp" element={<IncExp />} />
           <Route path="/TaxCalc" element={<TaxCalc />} />
-          <Route path="/EmergencyCalc" element={<EmergencyCalc />} />
+          <Route path="/EmergencyCalc" element={<EmergencyCalc />} /  >
         </Routes>
       </div>
     </Router>

@@ -1,239 +1,171 @@
 import React from "react";
 import {
   Navbar,
-  Collapse,
+  MobileNav,
   Typography,
   Button,
-  IconButton,
-  List,
-  ListItem,
   Menu,
   MenuHandler,
   MenuList,
   MenuItem,
+  Avatar,
+  IconButton,
 } from "@material-tailwind/react";
 import {
+  UserCircleIcon,
   ChevronDownIcon,
-  Bars3Icon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import {
-  Bars4Icon,
-  GlobeAmericasIcon,
-  NewspaperIcon,
-  PhoneIcon,
-  RectangleGroupIcon,
-  SquaresPlusIcon,
-  SunIcon,
-  TagIcon,
-  UserGroupIcon,
+  Bars2Icon,
 } from "@heroicons/react/24/solid";
- 
-const navListMenuItems = [
+
+// profile menu component
+const profileMenuItems = [
   {
-    title: "Products",
-    description: "Find the perfect solution for your needs.",
-    icon: SquaresPlusIcon,
-  },
-  {
-    title: "About Us",
-    description: "Meet and learn about our dedication",
-    icon: UserGroupIcon,
-  },
-  {
-    title: "Blog",
-    description: "Find the perfect solution for your needs.",
-    icon: Bars4Icon,
-  },
-  {
-    title: "Services",
-    description: "Learn how we can help you achieve your goals.",
-    icon: SunIcon,
-  },
-  {
-    title: "Support",
-    description: "Reach out to us for assistance or inquiries",
-    icon: GlobeAmericasIcon,
-  },
-  {
-    title: "Contact",
-    description: "Find the perfect solution for your needs.",
-    icon: PhoneIcon,
-  },
-  {
-    title: "News",
-    description: "Read insightful articles, tips, and expert opinions.",
-    icon: NewspaperIcon,
-  },
-  {
-    title: "Products",
-    description: "Find the perfect solution for your needs.",
-    icon: RectangleGroupIcon,
-  },
-  {
-    title: "Special Offers",
-    description: "Explore limited-time deals and bundles",
-    icon: TagIcon,
+    label: "My Profile",
+    icon: UserCircleIcon,
   },
 ];
- 
-function NavListMenu() {
+
+function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const renderItems = navListMenuItems.map(
-    ({ icon, title, description }, key) => (
-      <a href="#" key={key}>
-        <MenuItem className="flex items-center gap-3 rounded-lg">
-          <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2 ">
-            {" "}
-            {React.createElement(icon, {
-              strokeWidth: 2,
-              className: "h-6 text-gray-900 w-6",
-            })}
-          </div>
-          <div>
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="flex items-center text-sm font-bold"
-            >
-              {title}
-            </Typography>
-            <Typography
-              variant="paragraph"
-              className="text-xs !font-medium text-blue-gray-500"
-            >
-              {description}
-            </Typography>
-          </div>
-        </MenuItem>
-      </a>
-    ),
-  );
- 
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
-    <React.Fragment>
-      <Menu
-        open={isMenuOpen}
-        handler={setIsMenuOpen}
-        offset={{ mainAxis: 20 }}
-        placement="bottom"
-        allowHover={true}
-      >
-        <MenuHandler>
-          <Typography as="div" variant="small" className="font-medium">
-            <ListItem
-              className="flex items-center gap-2 py-2 pr-4 font-medium text-gray-900"
-              selected={isMenuOpen || isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen((cur) => !cur)}
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <MenuHandler>
+        <Button
+          variant="text"
+          color="blue-gray"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+        >
+          <Avatar
+            variant="circular"
+            size="sm"
+            alt="tania andrew"
+            className="border border-gray-900 p-0.5"
+            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+          />
+          <ChevronDownIcon
+            strokeWidth={2.5}
+            className={`h-3 w-3 transition-transform ${
+              isMenuOpen ? "rotate-180" : ""
+            }`}
+          />
+        </Button>
+      </MenuHandler>
+      <MenuList className="p-1">
+        {profileMenuItems.map(({ label, icon }, key) => {
+          const isLastItem = key === profileMenuItems.length - 1;
+          return (
+            <MenuItem
+              key={label}
+              onClick={closeMenu}
+              className={`flex items-center gap-2 rounded ${
+                isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+              }`}
             >
-              Resources
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`hidden h-3 w-3 transition-transform lg:block ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`block h-3 w-3 transition-transform lg:hidden ${
-                  isMobileMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </ListItem>
-          </Typography>
-        </MenuHandler>
-        <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
-          <ul className="grid grid-cols-3 gap-y-2 outline-none outline-0">
-            {renderItems}
-          </ul>
-        </MenuList>
-      </Menu>
-      <div className="block lg:hidden">
-        <Collapse open={isMobileMenuOpen}>{renderItems}</Collapse>
-      </div>
-    </React.Fragment>
+              {React.createElement(icon, {
+                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                strokeWidth: 2,
+              })}
+              <Typography
+                as="span"
+                variant="small"
+                className="font-normal"
+                color={isLastItem ? "red" : "inherit"}
+              >
+                {label}
+              </Typography>
+            </MenuItem>
+          );
+        })}
+      </MenuList>
+    </Menu>
   );
 }
- 
-function NavList() {
-  return (
-    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-medium"
-      >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">Home</ListItem>
-      </Typography>
-      <NavListMenu />
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-medium"
-      >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          Contact Us
-        </ListItem>
-      </Typography>
-    </List>
-  );
-}
- 
+
 export function MainNavbar() {
-  const [openNav, setOpenNav] = React.useState(false);
- 
+  const [isNavOpen, setIsNavOpen] = React.useState(false);
+
+  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
+      () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
- 
+
   return (
-    <Navbar className="mx-auto max-w-screen-xl px-4 py-2">
-      <div className="flex items-center justify-between text-blue-gray-900">
+    <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+      <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
           href="#"
-          variant="h6"
-          className="mr-4 cursor-pointer py-1.5 lg:ml-2"
+          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
         >
           Material Tailwind
         </Typography>
-        <div className="hidden lg:block">
-          <NavList />
-        </div>
-        <div className="hidden gap-2 lg:flex ">
-        <Button variant="text" size="sm" color="red">
-            Sign out
-          </Button>
-        </div>
         <IconButton
-          variant="text"
+          size="sm"
           color="blue-gray"
-          className="lg:hidden"
-          onClick={() => setOpenNav(!openNav)}
+          variant="text"
+          onClick={toggleIsNavOpen}
+          className="ml-auto mr-2 lg:hidden"
         >
-          {openNav ? (
-            <XMarkIcon className="h-6 w-6" strokeWidth={2} />
-          ) : (
-            <Bars3Icon className="h-6 w-6" strokeWidth={2} />
-          )}
+          <Bars2Icon className="h-6 w-6" />
         </IconButton>
-      </div>
-      <Collapse open={openNav}>
-        <NavList />
-        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-        <Button variant="outlined" size="sm" color="red" fullWidth>
-          Sign Out
+
+        {/* Income Icon */}
+        <Button size="sm" variant="text">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+          <path d="M12 7.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" />
+          <path fillRule="evenodd" d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 14.625v-9.75ZM8.25 9.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM18.75 9a.75.75 0 0 0-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75V9.75a.75.75 0 0 0-.75-.75h-.008ZM4.5 9.75A.75.75 0 0 1 5.25 9h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H5.25a.75.75 0 0 1-.75-.75V9.75Z" clipRule="evenodd" />
+          <path d="M2.25 18a.75.75 0 0 0 0 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 0 0-.75-.75H2.25Z" />
+        </svg>
         </Button>
+
+        {/* Emergency Fund Icon */}
+        <Button size="sm" variant="text">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+          <path d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875Z" />
+          <path d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 0 0 1.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 0 0 1.897 1.384C6.809 12.164 9.315 12.75 12 12.75Z" />
+          <path d="M12 16.5c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 0 0 1.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 0 0 1.897 1.384C6.809 15.914 9.315 16.5 12 16.5Z" />
+          <path d="M12 20.25c2.685 0 5.19-.586 7.078-1.609a8.282 8.282 0 0 0 1.897-1.384c.016.121.025.244.025.368 0 2.692-4.03 4.875-9 4.875s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.284 8.284 0 0 0 1.897 1.384C6.809 19.664 9.315 20.25 12 20.25Z" />
+        </svg>
+        </Button>
+
+        {/* Tax Icon */}
+        <Button size="sm" variant="text">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+          <path d="M11.584 2.376a.75.75 0 0 1 .832 0l9 6a.75.75 0 1 1-.832 1.248L12 3.901 3.416 9.624a.75.75 0 0 1-.832-1.248l9-6Z" />
+          <path fillRule="evenodd" d="M20.25 10.332v9.918H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h.75v-9.918a.75.75 0 0 1 .634-.74A49.109 49.109 0 0 1 12 9c2.59 0 5.134.202 7.616.592a.75.75 0 0 1 .634.74Zm-7.5 2.418a.75.75 0 0 0-1.5 0v6.75a.75.75 0 0 0 1.5 0v-6.75Zm3-.75a.75.75 0 0 1 .75.75v6.75a.75.75 0 0 1-1.5 0v-6.75a.75.75 0 0 1 .75-.75ZM9 12.75a.75.75 0 0 0-1.5 0v6.75a.75.75 0 0 0 1.5 0v-6.75Z" clipRule="evenodd" />
+          <path d="M12 7.875a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" />
+        </svg>
+
+        </Button>
+
+        <ProfileMenu />
+      </div>
+      <MobileNav open={isNavOpen} className="overflow-scroll">
+        <div className="hidden lg:block">
+          <Typography
+            key="account"
+            as="a"
+            href="#"
+            variant="small"
+            color="gray"
+            className="font-medium text-blue-gray-500"
+          >
+            <MenuItem className="flex items-center gap-2 lg:rounded-full">
+              <UserCircleIcon className="h-[18px] w-[18px]" />
+              <span className="text-gray-900"> Account</span>
+            </MenuItem>
+          </Typography>
         </div>
-      </Collapse>
+      </MobileNav>
     </Navbar>
   );
 }

@@ -19,6 +19,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "firebase": "^10.11.1",
+    "heroicons-react": "^1.4.1",
     "lucide-react": "^0.378.0",
     "mock-aws-s3": "^4.0.2",
     "nock": "^13.5.4",
